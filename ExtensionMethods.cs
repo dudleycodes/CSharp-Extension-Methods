@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 
 /// <summary>The goal of this collection of extension methods is to make c# code throughout the project more readable.</summary>
 public static class ExtensionMethods
@@ -6,9 +7,18 @@ public static class ExtensionMethods
     /// <summary>Returns a value indicating whether the specified char occurs within this char array</summary>
     /// <param name="haystack">The char array to search</param>
     /// <param name="needle">The char to seek</param>
+    /// <param name="caseInsensitive">Set to true to do a case-insensitive search</param>
     /// <returns>true if the needle parameter occurs within this char array; otherwise false.</returns>
-    public static bool Contains(this char[] haystack, char needle)
+    public static bool Contains(this char[] haystack, char needle, bool caseInsensitive = false)
     {
+        char[] haystackCopy = haystack;
+
+        if (caseInsensitive)
+        {
+            haystackCopy = haystack.Select(s => char.ToLower(s)).ToArray();
+            needle = char.ToLower(needle);
+        }
+
         if (Array.IndexOf(haystack, needle) >= 0)
         {
             return true;
@@ -20,10 +30,19 @@ public static class ExtensionMethods
     /// <summary>Returns a value indicating whether the specified string occurs within this string array</summary>
     /// <param name="haystack">The string array to search</param>
     /// <param name="needle">The string to seek</param>
+    /// <param name="caseInsensitive">Set to true to do a case-insensitive search</param>
     /// <returns>true if the needle parameter occurs within this string array, or if needle is the empty string (""); otherwise false.</returns>
-    public static bool Contains(this string[] haystack, string needle)
+    public static bool Contains(this string[] haystack, string needle, bool caseInsensitive = false)
     {
-        if (Array.IndexOf(haystack, needle) >= 0 || needle == string.Empty)
+        string[] haystackCopy = haystack;
+
+        if (caseInsensitive)
+        {
+            haystackCopy = haystack.Select(s => s.ToLower()).ToArray();
+            needle = needle.ToLower();
+        }
+
+        if (Array.IndexOf(haystackCopy, needle) >= 0 || needle == string.Empty)
         {
             return true;
         }
