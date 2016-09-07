@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 
 /// <summary>The goal of this collection of extension methods is to make c# code throughout the project more readable.</summary>
-public static class ExtensionMethods
+internal static class ExtensionMethods
 {
     /// <summary>Returns a value indicating whether the specified char occurs within this char array</summary>
     /// <param name="haystack">The char array to search</param>
